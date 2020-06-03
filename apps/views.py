@@ -129,6 +129,24 @@ def app_list():
 def index(request):
     try:
         apps = app_list()
+        if request.method == 'POST':
+            app_form = forms.CreateAppForm(request.POST)
+            if app_form.is_valid():
+                return create_app(app_form.cleaned_data['name'])
+        else:
+            app_form = forms.CreateAppForm()
+        config_form = forms.ConfigForm()
+        config_bulk_form = forms.ConfigFormBulk()
+        config = global_config()
+
+        return render(request, 'dashboard.html',
+                      {
+                          'apps': apps,
+                          'app_form': app_form,
+                          'config_form': config_form,
+                          'config_bulk_form': config_bulk_form,
+                          'config': sorted(config.items())
+                      })
     except Exception as e:
         if e.__class__.__name__ in ["AuthenticationException"]:  # Can't use class directly as Celery mangles things
             return render(
@@ -142,23 +160,6 @@ def index(request):
                 },)
         else:
             raise
-    if request.method == 'POST':
-        app_form = forms.CreateAppForm(request.POST)
-        if app_form.is_valid():
-            return create_app(app_form.cleaned_data['name'])
-    else:
-        app_form = forms.CreateAppForm()
-    config_form = forms.ConfigForm()
-    config_bulk_form = forms.ConfigFormBulk()
-    config = global_config()
-    return render(request, 'dashboard.html',
-                  {
-                      'apps': apps,
-                      'app_form': app_form,
-                      'config_form': config_form,
-                      'config_bulk_form': config_bulk_form,
-                      'config': sorted(config.items())
-                  })
 
 
 @login_required(login_url='/accounts/login/')
