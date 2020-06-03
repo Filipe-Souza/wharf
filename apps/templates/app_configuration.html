@@ -121,8 +121,14 @@
                                                                 <td>
                                                                     <form class="d-inline" action="{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
-                                                                        <input type="hidden" value="{{ item['LINKS'] }}" name="link_name" />
-                                                                        <button type="button" rel="tooltip" title="Remove this link" class="btn btn-danger btn-link btn-sm" onclick="this.submit()">
+                                                                        <input type="hidden" value="{{ item['LINKS'] }}" name="name" />
+                                                                        <button
+                                                                                type="button"
+                                                                                rel="tooltip"
+                                                                                title="Remove this link"
+                                                                                class="btn btn-danger btn-link btn-sm"
+                                                                                data-attribute="{{ item['LINKS'] }}"
+                                                                                onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                             <i class="material-icons">close</i>
                                                                         </button>
                                                                     </form>
@@ -178,7 +184,13 @@
                                                                     <form class="d-inline" action="{{ url('remove_mariadb', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item['LINKS'] }}" name="link_name" />
-                                                                        <button type="button" rel="tooltip" title="Remove this link" class="btn btn-danger btn-link btn-sm" onclick="this.submit()">
+                                                                        <button
+                                                                                type="button"
+                                                                                rel="tooltip"
+                                                                                title="Remove this link"
+                                                                                class="btn btn-danger btn-link btn-sm"
+                                                                                data-attribute="{{ item['LINKS'] }}"
+                                                                                onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_mariadb', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                             <i class="material-icons">close</i>
                                                                         </button>
                                                                     </form>
@@ -234,7 +246,13 @@
                                                                     <form class="d-inline" action="{{ url('remove_redis', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item['LINKS'] }}" name="link_name" />
-                                                                        <button type="button" rel="tooltip" title="Remove this link" class="btn btn-danger btn-link btn-sm" onclick="this.submit()">
+                                                                        <button
+                                                                                type="button"
+                                                                                rel="tooltip"
+                                                                                title="Remove this link"
+                                                                                class="btn btn-danger btn-link btn-sm"
+                                                                                data-attribute="{{ item['LINKS'] }}"
+                                                                                onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_redis', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                             <i class="material-icons">close</i>
                                                                         </button>
                                                                     </form>
