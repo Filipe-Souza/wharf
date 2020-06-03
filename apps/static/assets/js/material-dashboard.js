@@ -762,4 +762,29 @@ for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', toogle_hidden_value, false);
 }
 
-document.getElementById('ssh-key-to-clipboard').addEventListener('click', ssh_key_to_clipboard, false);
+if(document.body.contains(document.getElementById('ssh-key-to-clipboard')))
+{
+  document.getElementById('ssh-key-to-clipboard').addEventListener('click', ssh_key_to_clipboard, false);
+}
+
+function removeTarget(data, target, csrf){
+    var form = document.createElement('form');
+    document.body.appendChild(form);
+    form.method = 'POST';
+    form.action = target;
+
+    var elName = document.createElement('input');
+    elName.name = 'name';
+    elName.value = data;
+    elName.type = 'hidden';
+    form.appendChild(elName);
+
+
+    var elCSRF = document.createElement('input');
+    elCSRF.name = 'csrfmiddlewaretoken';
+    elCSRF.value = csrf;
+    elCSRF.type = 'hidden';
+    form.appendChild(elCSRF);
+
+    form.submit();
+}

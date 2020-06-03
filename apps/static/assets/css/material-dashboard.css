@@ -19770,6 +19770,7 @@ Copyright (c) 2015 Daniel Eden
 
 .env-var-hidden-value {
   border: none;
+  background-color: transparent;
 }
 
 .env-var-btn {
