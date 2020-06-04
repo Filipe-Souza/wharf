@@ -28,15 +28,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title" style="text-align: center;">
                                         <a class="btn btn-md btn-info"
-                                           href="{{ url('app_configuration', app_name=app) }}">Configure links and more
-                                        <i class="material-icons">settings</i>
+                                           href="{{ url('app_configuration', app_name=app) }}">Configure app links
+                                            <i class="material-icons">settings</i>
                                         </a>
                                     </h5>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">info</i>Manage Links and buildpacks
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -57,11 +52,6 @@
                                         {% endif %}
                                     </ul>
                                 </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> updated LOREM times ago
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -80,11 +70,6 @@
                                             <li>No processes running</li>
                                         {% endif %}
                                     </ul>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> updated LOREM times ago
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +139,7 @@
                                                                         title="Remove this domain"
                                                                         class="btn btn-danger btn-link btn-sm"
                                                                         data-attribute="{{ domain }}"
-                                                                        onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_domain', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);"
+                                                                        onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_domain', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                     <i class="material-icons">close</i>
                                                                 </button>
                                                             </td>
@@ -255,14 +240,13 @@
                                                                     class="btn env-var-btn material-icons env-var-hidden-value-toogle"
                                                                     rel="tooltip"
                                                                     title="See variable value"
-                                                                    data-attribute="{{ k }}"
-                                                                >
+                                                                    data-attribute="{{ k }}">
                                                                 </button>
                                                                 <button type="button" rel="tooltip"
                                                                         title="Remove this variable"
                                                                         class="btn btn-danger btn-link btn-sm"
                                                                         data-attribute="{{ k }}"
-                                                                        onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_app_env_var', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">                                                                >
+                                                                        onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_app_env_var', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                     <i class="material-icons">close</i>
                                                                 </button>
                                                             </td>
