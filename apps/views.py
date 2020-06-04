@@ -128,6 +128,7 @@ def app_list():
 @login_required(login_url='/accounts/login/')
 def index(request):
     try:
+        refresh_all(request)
         apps = app_list()
         if request.method == 'POST':
             app_form = forms.CreateAppForm(request.POST)
