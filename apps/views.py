@@ -91,7 +91,9 @@ def wait_for_command(request, app_name, task_id, after):
     log = ansi_escape.sub("", get_log(res))
     if res.state == state(FAILURE):
         log += str(res.traceback)
-    return render(request, 'command_wait.html', {
+    return render(
+        request,
+        'command_logs.html', {
         'app': app_name,
         'task_id': task_id,
         'log': log,
@@ -108,7 +110,7 @@ def show_log(request, task_id):
     log = ansi_escape.sub("", get_log(res))
     if res.state == state(FAILURE):
         log += str(res.traceback)
-    return render(request, 'command_wait.html', {
+    return render(request, 'command_logs.html', {
         'app': task.app.name,
         'task_id': task_id,
         'log': log,
@@ -615,7 +617,7 @@ def app_info(request, app_name):
     return render(request, 'app_info.html', {
         'letsencrypt': letsencrypt(app_name),
         'process': process_info(app_name),
-        'logs': ansi_escape.sub("", run_cmd("logs %s --num 100" % app_name)),
+        'logs': ansi_escape.sub("", run_cmd("logs %s --num 1000" % app_name)),
         'domains': domains_list(app_name),
         'domain_form': forms.CreateDomainForm(),
         'config_bulk_form': form,
@@ -889,7 +891,7 @@ def check_letsencrypt(request, app_name, task_id):
         clear_cache("letsencrypt:ls")
         return redirect(reverse('app_info', args=[app_name]))
     else:
-        return render(request, 'command_wait.html',
+        return render(request, 'command_logs.html',
                       {'app': app_name, 'task_id': task_id, 'log': log, 'state': res.state,
                        'running': res.state in [state(PENDING), state(STARTED)]})
 
