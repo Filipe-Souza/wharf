@@ -141,10 +141,6 @@ $(window).resize(function() {
 
   // reset the seq for charts drawing animations
   seq = seq2 = 0;
-
-  setTimeout(function() {
-    md.initDashboardPageCharts();
-  }, 500);
 });
 
 md = {
