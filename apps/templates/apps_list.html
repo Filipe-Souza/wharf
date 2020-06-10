@@ -33,20 +33,75 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary">
-                                            <th>Name</th>
-                                            <th>Deploy lock</th>
+                                                <th>Name</th>
+                                                <th>Git SHA</th>
+                                                <th>Deploy lock status</th>
+                                                <th class="text-right">Actions</th>
                                             </thead>
                                             <tbody>
-                                            {% for app in apps %}
+                                             {% for app in apps %}
                                                 <tr>
-                                                    <td><a href="{{ url('app_info', app_name=app) }}" title="{{ app }}" rel="nofollow noopener noreferrer">{{ app }}</a></td>
-                                                    <td>Not present</td>
+                                                    <td>
+                                                        <a href="{{ url('app_info', app_name=app[0]) }}"
+                                                           title="{{ app[0] }}"
+                                                           rel="nofollow noopener noreferrer">
+                                                            {{ app[0] }}
+                                                        </a>
+                                                    </td>
+                                                    {% if app[2] %}
+                                                        <td>{{ app[2] }}</td>
+                                                    {% else %}
+                                                        <td>-</td>
+                                                    {% endif %}
+                                                    <td>
+                                                        {% if app[4] %}
+                                                            {% if app[4] == 'false' %}
+                                                                <button type="button" rel="tooltip"
+                                                                    title="Unlock this app and enable deploys"
+                                                                    class="btn btn-danger btn-link btn-sm">
+                                                                    <i class="material-icons" style="margin-left: -35px;">lock</i>
+                                                                    Locked
+                                                                </button>
+                                                            {% else %}
+                                                                <button type="button" rel="tooltip"
+                                                                    title="Lock this app and disable deploys"
+                                                                    class="btn btn-info btn-link btn-sm">
+                                                                    <i class="material-icons">lock_open</i>
+                                                                    Unlocked
+                                                                </button>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            -
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="td-actions text-right" style="width: fit-content;">
+                                                        <button type="button" rel="tooltip"
+                                                                title="Rebuild this app"
+                                                                class="btn btn-link btn-sm"
+                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                            <i class="material-icons">autorenew</i>
+                                                        </button>
+                                                        <button type="button" rel="tooltip"
+                                                                title="Stop this app"
+                                                                class="btn btn-link btn-link btn-sm"
+                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                            <i class="material-icons">stop</i>
+                                                        </button>
+                                                        <button type="button" rel="tooltip"
+                                                                title="Start this app"
+                                                                class="btn btn-link btn-link btn-sm"
+                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                            <i class="material-icons">play_arrow</i>
+                                                        </button>
+                                                        <button type="button" rel="tooltip"
+                                                                title="Restart this app"
+                                                                class="btn btn-link btn-sm"
+                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                            <i class="material-icons">refresh</i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
-                                            {% else %}
-                                                <tr>
-                                                    <td>No apps to list</td>
-                                                </tr>
-                                            {% endfor %}
+                                             {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
