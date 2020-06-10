@@ -288,10 +288,12 @@ var toogle_hidden_value = function() {
     var targetEl = document.getElementById('env-var-hidden-value-input-'+attribute);
     if(targetEl.type === 'text')
     {
+        targetEl.value = '';
         targetEl.type = 'password';
     }
     else if(targetEl.type === 'password')
     {
+        targetEl.value = targetEl.getAttribute('data-value');
         targetEl.type = 'text';
     }
 };
