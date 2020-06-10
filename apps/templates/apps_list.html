@@ -36,7 +36,7 @@
                                                 <th>Name</th>
                                                 <th>Git SHA</th>
                                                 <th>Deploy lock status</th>
-                                                <th>Actions</th>
+                                                <th class="text-right">Actions</th>
                                             </thead>
                                             <tbody>
                                              {% for app in apps %}
@@ -74,7 +74,7 @@
                                                             -
                                                         {% endif %}
                                                     </td>
-                                                    <td class="td-actions" style="width: fit-content;">
+                                                    <td class="td-actions text-right" style="width: fit-content;">
                                                         <button type="button" rel="tooltip"
                                                                 title="Rebuild this app"
                                                                 class="btn btn-link btn-sm"
