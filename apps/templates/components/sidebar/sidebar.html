@@ -4,25 +4,25 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item active">
+            <li class="nav-item {% if request.resolver_match.url_name == "index" %}active{% endif %}">
                 <a class="nav-link" href="/">
                     <i class="material-icons">dashboard</i>
                     <p>Home</p>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.resolver_match.url_name == "apps_list" %}active{% endif %}">
                 <a class="nav-link" href="{{ url('apps_list') }}">
                     <i class="material-icons">apps</i>
                     <p>Applications</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item {% if request.resolver_match.url_name == "global_variables_list" %}active{% endif %}">
                 <a class="nav-link" href="{{ url('global_variables_list') }}">
                     <i class="material-icons">tune</i>
                     <p>Global Variables</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item {% if request.resolver_match.url_name == "settings_page" %}active{% endif %}">
                 <a class="nav-link" href="{{ url('settings_page') }}">
                     <i class="material-icons">settings</i>
                     <p>Settings</p>
