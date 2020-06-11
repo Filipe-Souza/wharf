@@ -71,8 +71,8 @@ class BuildpackAddForm(forms.Form):
 
 class BuildpackRemoveForm(forms.Form):
 
-    buildpack_url = forms.CharField(
-        label='Buildpack URL'
+    name = forms.CharField(
+        label='Buildpack URL',
     )
 
 

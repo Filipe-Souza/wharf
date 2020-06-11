@@ -730,7 +730,7 @@ def remove_buildpack(request, app_name):
 
         if buildpack_form.is_valid():
 
-            buildpack_url = buildpack_form.cleaned_data['buildpack_url']
+            buildpack_url = buildpack_form.cleaned_data['name']
 
             cmd = "buildpacks:remove %s %s" % (app_name, buildpack_url)
 

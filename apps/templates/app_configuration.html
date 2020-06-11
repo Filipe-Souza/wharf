@@ -323,8 +323,8 @@
                                                                         <button type="button" rel="tooltip"
                                                                             title="Remove this buildpack"
                                                                             class="btn btn-danger btn-link btn-sm"
-                                                                            disabled="disabled"
-                                                                            >
+                                                                            data-attribute="{{ item }}"
+                                                                            onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_buildpack', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
                                                                             <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>
