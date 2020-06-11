@@ -35,13 +35,37 @@ class ConfigRemoveForm(forms.Form):
 class BuildpackAddForm(forms.Form):
 
     buildpack_url = forms.CharField(
-        label='Buildpack URL',
+        label='URL',
+        widget=forms.TextInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'class': 'form-control',
+            }
+        ),
     )
-    buildpack_type = forms.CharField(
-        label='Buildpack type',
+    buildpack_type = forms.ChoiceField(
+        label='Type',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        choices=(
+            ('set', 'Set this buildpack URL'),
+            ('add', 'Add this buildpack URL to the list')
+        )
     )
+
     buildpack_index = forms.CharField(
-        label='Buildpack index',
+        label='Index',
+        widget=forms.NumberInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'class': 'form-control',
+                'min': 1,
+                'max': 999,
+            }
+        ),
     )
 
 

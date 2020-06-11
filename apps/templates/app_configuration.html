@@ -288,7 +288,7 @@
                                                     <div class="nav-tabs-wrapper">
                                                         <ul class="nav nav-tabs" data-tabs="tabs">
                                                             <li class="nav-item">
-                                                                <a class="nav-link" rel="tooltip" title="Add a new Buildpack" href="#">
+                                                                <a class="nav-link" rel="tooltip" title="Add a new Buildpack" href="{{ url('add_buildpack', app_name=app) }}">
                                                                     <i class="material-icons">add_box</i> Add new
                                                                     <div class="ripple-container"></div>
                                                                 </a>
@@ -301,8 +301,8 @@
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col">Buildpack</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col">Buildpack URL</th>
+                                                        <th scope="col" class="text-right">Actions</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -316,14 +316,15 @@
                                                                         <span class="buildpack-name-item">{{ item }}</span>
                                                                     {% endif %}
                                                                 </td>
-                                                                <td>
+                                                                <td class="td-actions text-right">
                                                                     <form class="d-inline" action="{{ url('remove_buildpack', app_name=app) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item }}" name="buildpack_url" />
                                                                         <button type="button" rel="tooltip"
                                                                             title="Remove this buildpack"
                                                                             class="btn btn-danger btn-link btn-sm"
-                                                                            onclick="this.submit()">
+                                                                            disabled="disabled"
+                                                                            >
                                                                             <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>

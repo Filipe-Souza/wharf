@@ -753,7 +753,7 @@ def add_buildpack(request, app_name):
 
         if buildpack_form.is_valid():
             buildpack_url = buildpack_form.cleaned_data['buildpack_url']
-            buildpack_type = "set" if buildpack_form.cleaned_data['buildpack_type'] is "set" else "add"
+            buildpack_type = "add" if buildpack_form.cleaned_data['buildpack_type'] is None else buildpack_form.cleaned_data['buildpack_type']
 
             cmd = "buildpacks:%s%s %s %s" % (
                 buildpack_type,
@@ -773,6 +773,15 @@ def add_buildpack(request, app_name):
             )
         else:
             raise Exception("Cannot add buildpack, the form is invalid.")
+    else:
+        return render(
+            request,
+            'buildpack_new.html',
+            {
+                'buildpack_form': forms.BuildpackAddForm(),
+                'app': app_name
+            }
+        )
 
 
 def check_buildpack(request, app_name, task_id):
