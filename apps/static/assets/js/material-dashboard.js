@@ -138,6 +138,9 @@ $(document).on('click', '.navbar-toggler', function() {
 // activate collapse right menu when the windows is resized
 $(window).resize(function() {
   md.initSidebarsCheck();
+
+  // reset the seq for charts drawing animations
+  seq = seq2 = 0;
 });
 
 md = {
@@ -227,15 +230,11 @@ md = {
 
       nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + '</ul>';
 
-      navbar_form = $('nav').find('.navbar-form').get(0).outerHTML;
-
       $sidebar_nav = $sidebar_wrapper.find(' > .nav');
 
       // insert the navbar form before the sidebar list
       $nav_content = $(nav_content);
-      $navbar_form = $(navbar_form);
       $nav_content.insertBefore($sidebar_nav);
-      $navbar_form.insertBefore($nav_content);
 
       $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function(event) {
         event.stopPropagation();
@@ -285,10 +284,12 @@ var toogle_hidden_value = function() {
     var targetEl = document.getElementById('env-var-hidden-value-input-'+attribute);
     if(targetEl.type === 'text')
     {
+        targetEl.value = '';
         targetEl.type = 'password';
     }
     else if(targetEl.type === 'password')
     {
+        targetEl.value = targetEl.getAttribute('data-value');
         targetEl.type = 'text';
     }
 };

@@ -49,28 +49,24 @@
                                             <ul class="nav nav-tabs" data-tabs="tabs">
                                                 <li class="nav-item">
                                                     <a class="nav-link tech-icon active" href="#postgres" data-toggle="tab">
-                                                        <i class="icon-postgres"></i>
                                                         <span>Postgres</span>
                                                         <div class="ripple-container"></div>
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link tech-icon" href="#mariadb" data-toggle="tab">
-                                                        <i class="icon-mariadb"></i>
                                                         <span>MariaDB</span>
                                                         <div class="ripple-container"></div>
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link tech-icon" href="#redis" data-toggle="tab">
-                                                        <i class="icon-redis"></i>
                                                         <span>Redis</span>
                                                         <div class="ripple-container"></div>
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link tech-icon" href="#buildpacks" data-toggle="tab">
-                                                        <i class="icon-heroku"></i>
                                                         <span>Buildpacks</span>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -106,7 +102,7 @@
                                                             <th scope="col">Version</th>
                                                             <th scope="col">Exposed ports</th>
                                                             <th scope="col">Links</th>
-                                                            <th scope="col">Action</th>
+                                                            <th scope="col" class="text-right">Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -118,18 +114,24 @@
                                                                 <td>{{ item['VERSION'] }}</td>
                                                                 <td>{{ item['EXPOSED PORTS'] }}</td>
                                                                 <td>{{ item['LINKS'] }}</td>
-                                                                <td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip"
+                                                                        title="Allow external access to this link"
+                                                                        class="btn btn-link btn-sm"
+                                                                        data-attribute="{{ item['LINKS'] }}"
+                                                                        data-target="#">
+                                                                        <i class="material-icons">compare_arrows</i>
+                                                                    </button>
                                                                     <form class="d-inline" action="{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item['LINKS'] }}" name="name" />
-                                                                        <button
-                                                                                type="button"
-                                                                                rel="tooltip"
-                                                                                title="Remove this link"
-                                                                                class="btn btn-danger btn-link btn-sm"
-                                                                                data-attribute="{{ item['LINKS'] }}"
-                                                                                onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                            <i class="material-icons">close</i>
+                                                                        <button type="button" rel="tooltip"
+                                                                            title="Remove this link"
+                                                                            class="btn btn-danger btn-link btn-sm"
+                                                                            data-attribute="{{ item['LINKS'] }}"
+                                                                            data-target="{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}"
+                                                                            onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_postgres', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
+                                                                            <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>
                                                                 </td>
@@ -168,7 +170,7 @@
                                                         <th scope="col">Version</th>
                                                         <th scope="col">Exposed ports</th>
                                                         <th scope="col">Links</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col" class="text-right">Actions</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -180,18 +182,24 @@
                                                                 <td>{{ item['VERSION'] }}</td>
                                                                 <td>{{ item['EXPOSED PORTS'] }}</td>
                                                                 <td>{{ item['LINKS'] }}</td>
-                                                                <td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip"
+                                                                        title="Allow external access to this link"
+                                                                        class="btn btn-link btn-sm"
+                                                                        data-attribute="{{ item['LINKS'] }}"
+                                                                        data-target="#">
+                                                                        <i class="material-icons">compare_arrows</i>
+                                                                    </button>
                                                                     <form class="d-inline" action="{{ url('remove_mariadb', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item['LINKS'] }}" name="link_name" />
-                                                                        <button
-                                                                                type="button"
-                                                                                rel="tooltip"
+                                                                        <button type="button" rel="tooltip"
                                                                                 title="Remove this link"
                                                                                 class="btn btn-danger btn-link btn-sm"
                                                                                 data-attribute="{{ item['LINKS'] }}"
+                                                                                data-target="{{ url('remove_mariadb', app_name=app, link_name=item['LINKS']) }}"
                                                                                 onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_mariadb', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                            <i class="material-icons">close</i>
+                                                                            <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>
                                                                 </td>
@@ -230,7 +238,7 @@
                                                         <th scope="col">Version</th>
                                                         <th scope="col">Exposed ports</th>
                                                         <th scope="col">Links</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col" class="text-right">Actions</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -242,18 +250,24 @@
                                                                 <td>{{ item['VERSION'] }}</td>
                                                                 <td>{{ item['EXPOSED PORTS'] }}</td>
                                                                 <td>{{ item['LINKS'] }}</td>
-                                                                <td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip"
+                                                                        title="Allow external access to this link"
+                                                                        class="btn btn-link btn-sm"
+                                                                        data-attribute="{{ item['LINKS'] }}"
+                                                                        data-target="#">
+                                                                        <i class="material-icons">compare_arrows</i>
+                                                                    </button>
                                                                     <form class="d-inline" action="{{ url('remove_redis', app_name=app, link_name=item['LINKS']) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item['LINKS'] }}" name="link_name" />
-                                                                        <button
-                                                                                type="button"
-                                                                                rel="tooltip"
+                                                                        <button type="button" rel="tooltip"
                                                                                 title="Remove this link"
                                                                                 class="btn btn-danger btn-link btn-sm"
                                                                                 data-attribute="{{ item['LINKS'] }}"
+                                                                                data-target="{{ url('remove_redis', app_name=app, link_name=item['LINKS']) }}"
                                                                                 onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_redis', app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                            <i class="material-icons">close</i>
+                                                                            <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>
                                                                 </td>
@@ -274,7 +288,7 @@
                                                     <div class="nav-tabs-wrapper">
                                                         <ul class="nav nav-tabs" data-tabs="tabs">
                                                             <li class="nav-item">
-                                                                <a class="nav-link" rel="tooltip" title="Add a new Buildpack" href="#">
+                                                                <a class="nav-link" rel="tooltip" title="Add a new Buildpack" href="{{ url('add_buildpack', app_name=app) }}">
                                                                     <i class="material-icons">add_box</i> Add new
                                                                     <div class="ripple-container"></div>
                                                                 </a>
@@ -287,8 +301,8 @@
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col">Buildpack</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col">Buildpack URL</th>
+                                                        <th scope="col" class="text-right">Actions</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -302,12 +316,16 @@
                                                                         <span class="buildpack-name-item">{{ item }}</span>
                                                                     {% endif %}
                                                                 </td>
-                                                                <td>
+                                                                <td class="td-actions text-right">
                                                                     <form class="d-inline" action="{{ url('remove_buildpack', app_name=app) }}" method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" value="{{ item }}" name="buildpack_url" />
-                                                                        <button type="button" rel="tooltip" title="Remove this buildpack" class="btn btn-danger btn-link btn-sm" onclick="this.submit()">
-                                                                            <i class="material-icons">close</i>
+                                                                        <button type="button" rel="tooltip"
+                                                                            title="Remove this buildpack"
+                                                                            class="btn btn-danger btn-link btn-sm"
+                                                                            data-attribute="{{ item }}"
+                                                                            onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_buildpack', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
+                                                                            <i class="material-icons">delete</i>
                                                                         </button>
                                                                     </form>
                                                                 </td>

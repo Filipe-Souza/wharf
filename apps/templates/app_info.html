@@ -113,24 +113,27 @@
                                         <div class="tab-pane active" id="profile">
                                             <div class="table-responsive">
                                                 <table class="table">
+                                                    <thead class="text-primary">
+                                                        <th>Domain name</th>
+                                                        <th class="text-right">Actions</th>
+                                                    </thead>
                                                     <tbody>
                                                     {% for domain in domains %}
                                                         <tr>
-                                                            <td style="width: 100%">
+                                                            <td>
                                                                 <a href="{{ 'https' if letsencrypt else 'http' }}://{{ domain }}"
                                                                    rel="nofollow noopener noreferrer"
                                                                    target="_blank">{{ domain }}</a>
                                                             </td>
-                                                            <td class="td-actions text-right"
-                                                                style="width: fit-content;">
-                                                                <input type="hidden" name="name"
-                                                                       value="{{ domain }}"/>
+                                                            <td class="td-actions text-right">
                                                                 <button type="button" rel="tooltip"
-                                                                        title="Remove this domain"
-                                                                        class="btn btn-danger btn-link btn-sm"
-                                                                        data-attribute="{{ domain }}"
-                                                                        onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_domain', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                    <i class="material-icons">close</i>
+                                                                    title="Remove this domain"
+                                                                    class="btn btn-danger btn-link btn-sm"
+                                                                    data-attribute="{{ domain }}"
+                                                                    data-target="{{ url('remove_domain', app_name=app) }}"
+                                                                    onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_domain', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);"
+                                                                >
+                                                                    <i class="material-icons">delete</i>
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -205,10 +208,10 @@
                                         <div class="tab-pane active" id="app-env-vars-list">
                                             <div class="table-responsive">
                                                 <table class="table">
-                                                    <thead class=" text-primary">
-                                                        <th width="38%">Name</th>
-                                                        <th width="55%">Value</th>
-                                                        <th>Action</th>
+                                                    <thead class="text-primary">
+                                                        <th>Name</th>
+                                                        <th>Value</th>
+                                                        <th class="text-right">Actions</th>
                                                     </thead>
                                                     <tbody>
                                                     {% for (k,v) in config %}
@@ -217,7 +220,8 @@
                                                             <td>
                                                                 <input
                                                                     type="password"
-                                                                    value="{{ v }}"
+                                                                    placeholder="*****"
+                                                                    data-value="{{ v }}"
                                                                     class="env-var-hidden-value"
                                                                     disabled="disabled"
                                                                     autocomplete="off"
@@ -225,19 +229,19 @@
                                                                     id="env-var-hidden-value-input-{{ k }}"
                                                                 />
                                                             </td>
-                                                            <td>
+                                                            <td class="td-actions text-right">
                                                                 <button
                                                                     class="btn env-var-btn material-icons env-var-hidden-value-toogle"
-                                                                    rel="tooltip"
-                                                                    title="See variable value"
+                                                                    rel="tooltip" title="See variable value"
                                                                     data-attribute="{{ k }}">
                                                                 </button>
                                                                 <button type="button" rel="tooltip"
                                                                         title="Remove this variable"
                                                                         class="btn btn-danger btn-link btn-sm"
                                                                         data-attribute="{{ k }}"
+                                                                        data-target="{{ url('remove_app_env_var', app_name=app) }}"
                                                                         onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_app_env_var', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                    <i class="material-icons">close</i>
+                                                                    <i class="material-icons">delete</i>
                                                                 </button>
                                                             </td>
                                                         </tr>

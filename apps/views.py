@@ -94,13 +94,13 @@ def wait_for_command(request, app_name, task_id, after):
     return render(
         request,
         'command_logs.html', {
-        'app': app_name,
-        'task_id': task_id,
-        'log': log,
-        'state': res.state,
-        'running': res.state in [state(PENDING), state(STARTED)],
-        'description': description
-    })
+            'app': app_name,
+            'task_id': task_id,
+            'log': log,
+            'state': res.state,
+            'running': res.state in [state(PENDING), state(STARTED)],
+            'description': description
+        })
 
 
 @login_required(login_url='/accounts/login/')
@@ -125,6 +125,21 @@ def app_list():
     if lines[0] != "=====> My Apps":
         raise Exception(data)
     return lines[1:]
+
+
+class MyClass(object):
+    pass
+
+
+def apps_report():
+    data = run_cmd_with_cache("apps:report")
+    search = " app information"
+    lines = filter(None, data.split("=====> "))
+    lines = list(map(lambda line: re.split("\n", str(line)), lines))
+    for i in range(len(lines)):
+        lines[i] = list(map(lambda line: re.sub(r"(\s\w*\s\w*):\s", '', str(line)), lines[i]))
+        lines[i] = list(map(lambda line: re.sub(search, '', line) if re.search(search, line) else line, lines[i]))
+    return lines
 
 
 @login_required(login_url='/accounts/login/')
@@ -160,7 +175,7 @@ def index(request):
                     'navbar': {
                         'screen': 'setup'
                     }
-                },)
+                }, )
         else:
             raise
 
@@ -204,7 +219,7 @@ def apps_list(request):
     :return:
     """
     try:
-        apps = app_list()
+        apps = apps_report()
     except Exception as e:
         if e.__class__.__name__ in ["AuthenticationException"]:  # Can't use class directly as Celery mangles things
             return render(request, 'setup_key.html', {'key': tasks.get_public_key.delay().get()})
@@ -715,7 +730,7 @@ def remove_buildpack(request, app_name):
 
         if buildpack_form.is_valid():
 
-            buildpack_url = buildpack_form.cleaned_data['buildpack_url']
+            buildpack_url = buildpack_form.cleaned_data['name']
 
             cmd = "buildpacks:remove %s %s" % (app_name, buildpack_url)
 
@@ -738,7 +753,7 @@ def add_buildpack(request, app_name):
 
         if buildpack_form.is_valid():
             buildpack_url = buildpack_form.cleaned_data['buildpack_url']
-            buildpack_type = "set" if buildpack_form.cleaned_data['buildpack_type'] is "set" else "add"
+            buildpack_type = "add" if buildpack_form.cleaned_data['buildpack_type'] is None else buildpack_form.cleaned_data['buildpack_type']
 
             cmd = "buildpacks:%s%s %s %s" % (
                 buildpack_type,
@@ -758,6 +773,15 @@ def add_buildpack(request, app_name):
             )
         else:
             raise Exception("Cannot add buildpack, the form is invalid.")
+    else:
+        return render(
+            request,
+            'buildpack_new.html',
+            {
+                'buildpack_form': forms.BuildpackAddForm(),
+                'app': app_name
+            }
+        )
 
 
 def check_buildpack(request, app_name, task_id):

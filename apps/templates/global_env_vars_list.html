@@ -33,9 +33,11 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th width="38%">Name</th>
-                                            <th width="55%">Value</th>
-                                            <th>Action</th>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Value</th>
+                                                <th scope="col" class="text-right">Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         {% for (k,v) in config %}
@@ -44,7 +46,8 @@
                                                 <td>
                                                     <input
                                                         type="password"
-                                                        value="{{ v }}"
+                                                        placeholder="*****"
+                                                        data-value="{{ v }}"
                                                         class="env-var-hidden-value"
                                                         disabled="disabled"
                                                         autocomplete="off"
@@ -52,20 +55,18 @@
                                                         id="env-var-hidden-value-input-{{ k }}"
                                                     />
                                                 </td>
-                                                <td>
+                                                <td class="td-actions text-right">
                                                     <button
                                                         class="btn env-var-btn material-icons env-var-hidden-value-toogle"
-                                                        rel="tooltip"
-                                                        title="See variable value"
-                                                        data-attribute="{{ k }}"
-                                                    >
+                                                        rel="tooltip" title="See variable value"
+                                                        data-attribute="{{ k }}">
                                                     </button>
                                                     <button type="button" rel="tooltip"
-                                                        title="Remove this domain"
+                                                        title="Remove this variable"
                                                         class="btn btn-danger btn-link btn-sm"
                                                         data-attribute="{{ k }}"
-                                                    >
-                                                        <i class="material-icons">close</i>
+                                                        disabled="disabled">
+                                                        <i class="material-icons">delete</i>
                                                     </button>
                                                 </td>
                                             </tr>
