@@ -761,7 +761,8 @@ def add_buildpack(request, app_name):
 
         if buildpack_form.is_valid():
             buildpack_url = buildpack_form.cleaned_data['buildpack_url']
-            buildpack_type = "add" if buildpack_form.cleaned_data['buildpack_type'] is None else buildpack_form.cleaned_data['buildpack_type']
+            buildpack_type = "add" if buildpack_form.cleaned_data['buildpack_type'] is None else \
+            buildpack_form.cleaned_data['buildpack_type']
 
             cmd = "buildpacks:%s%s %s %s" % (
                 buildpack_type,
@@ -1003,3 +1004,40 @@ def check_deploy_lock(request, app_name, task_id):
     messages.success(request, "Deploy lock changed on %s" % app_name)
     clear_cache("apps:report")
     return redirect(reverse('apps_list'))
+
+
+def change_app_state(request, app_name, action):
+    try:
+        actions = list(("start", "stop", "restart"))
+        if action in actions:
+            commands = "ps:%s %s" % (action, app_name)
+            return run_cmd_with_log(
+                app_name,
+                "Trying to %s %s" % (action, app_name),
+                [
+                    commands,
+                ],
+                'check_app_state',
+            )
+        else:
+            raise Exception("This action is not allowed")
+    except Exception:
+        raise
+
+
+def check_app_state(request, app_name, task_id):
+    res = AsyncResult(task_id)
+    data = get_log(res)
+
+    if data.find("Stopping %s" % app_name) == -1:
+        messages.success(request, "App %s status changed" % app_name)
+        clear_cache("apps:report")
+        return redirect(reverse('apps_list'))
+    elif data.find("-----> Releasing") == -1:
+        messages.success(request, "App %s status changed" % app_name)
+        clear_cache("apps:report")
+        return redirect(reverse('apps_list'))
+    else:
+        raise Exception(data)
+
+

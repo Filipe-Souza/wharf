@@ -73,30 +73,40 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="td-actions text-right" style="width: fit-content;">
-                                                        <button type="button" rel="tooltip"
-                                                                title="Rebuild this app"
-                                                                class="btn btn-link btn-sm"
-                                                                data-attribute="{{ app[0] }}" disabled="disabled">
-                                                            <i class="material-icons">build</i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip"
-                                                                title="Stop this app"
-                                                                class="btn btn-link btn-link btn-sm"
-                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                        <a
+                                                            href="{{ url('app_configuration', app_name=app[0]) }}"
+                                                            type="button"
+                                                            rel="tooltip"
+                                                            title="Manage application dependencies"
+                                                            class="btn btn-link btn-sm"
+                                                            data-attribute="{{ app[0] }}">
+                                                            <i class="material-icons">settings</i>
+                                                        </a>
+                                                        <a
+                                                            href="{{ url('change_app_state', app_name=app[0], action='stop') }}"
+                                                            type="button"
+                                                            rel="tooltip"
+                                                            title="Stop this app"
+                                                            class="btn btn-link btn-link btn-sm"
+                                                            data-attribute="{{ app[0] }}">
                                                             <i class="material-icons">stop</i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip"
-                                                                title="Start this app"
-                                                                class="btn btn-link btn-link btn-sm"
-                                                                data-attribute="{{ app[0] }}" disabled="disabled">
+                                                        </a>
+                                                        <a
+                                                            href="{{ url('change_app_state', app_name=app[0], action='start') }}"
+                                                            type="button" rel="tooltip"
+                                                            title="Start this app"
+                                                            class="btn btn-link btn-link btn-sm"
+                                                            data-attribute="{{ app[0] }}">
                                                             <i class="material-icons">play_arrow</i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip"
-                                                                title="Restart this app"
-                                                                class="btn btn-link btn-sm"
-                                                                data-attribute="{{ app[0] }}" disabled="disabled">
-                                                            <i class="material-icons">refresh</i>
-                                                        </button>
+                                                        </a>
+                                                        <a
+                                                            href="{{ url('change_app_state', app_name=app[0], action='restart') }}"
+                                                            type="button" rel="tooltip"
+                                                            title="Restart this app"
+                                                            class="btn btn-link btn-sm"
+                                                            data-attribute="{{ app[0] }}">
+                                                            <i class="material-icons">replay</i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                              {% endfor %}
