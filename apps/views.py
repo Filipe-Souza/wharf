@@ -8,6 +8,7 @@ from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest, HttpResponse, HttpResponseServerError
 from django.contrib.auth.decorators import login_required
+from pprint import pprint
 
 import requests
 import time
@@ -220,6 +221,13 @@ def apps_list(request):
     """
     try:
         apps = apps_report()
+        for app in apps:
+            try:
+                app[4] = 'False' if app[4].strip() == 'false' else 'True'
+            except IndexError:
+                app.insert(4, '-')
+                pass
+            app, _ = models.App.objects.get_or_create(name=app[0])
     except Exception as e:
         if e.__class__.__name__ in ["AuthenticationException"]:  # Can't use class directly as Celery mangles things
             return render(request, 'setup_key.html', {'key': tasks.get_public_key.delay().get()})
@@ -964,3 +972,34 @@ def status(request):
         return HttpResponse("All good")
     except timeout_decorator.TimeoutError:
         return HttpResponseServerError("Timeout trying to get status")
+
+
+def toggle_deploy_lock(request, app_name, action):
+    try:
+        actions = list(("lock", "unlock"))
+        if action in actions:
+            commands = "apps:%s %s" % (action, app_name)
+            return run_cmd_with_log(
+                app_name,
+                "Trying to lock app" if action is "lock" else "Trying to unlock app",
+                [
+                    commands,
+                ],
+                'check_deploy_lock',
+            )
+        else:
+            raise Exception("This action is not allowed")
+    except Exception:
+        raise
+
+
+def check_deploy_lock(request, app_name, task_id):
+    res = AsyncResult(task_id)
+    data = get_log(res)
+
+    if data.find("-----> Deploy lock") == -1:
+        raise Exception(data)
+
+    messages.success(request, "Deploy lock changed on %s" % app_name)
+    clear_cache("apps:report")
+    return redirect(reverse('apps_list'))

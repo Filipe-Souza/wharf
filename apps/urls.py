@@ -18,8 +18,10 @@ urlpatterns = [
     path('apps', views.apps_list, name='apps_list'),
     path('apps/new-app', views.new_app_page, name='new_app_page'),
     path('apps/<app_name>/configuration', views.app_configuration, name='app_configuration'),
+    path('apps/<app_name>/<action>', views.toggle_deploy_lock, name='app_toggle_lock'),
     path('apps/<app_name>/remove-env-var', views.remove_app_env_var, name='remove_app_env_var'),
     path('apps/<app_name>/remove-env-var/<task_id>', views.check_app_config_unset, name='check_config_unset'),
+    path('apps/<app_name>/check-deploy-lock/<task_id>', views.check_deploy_lock, name='check_deploy_lock'),
 
     # END NEW VIEWS
 
