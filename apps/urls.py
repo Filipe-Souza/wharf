@@ -24,6 +24,7 @@ urlpatterns = [
     path('apps/<app_name>/check-deploy-lock/<task_id>', views.check_deploy_lock, name='check_deploy_lock'),
     path('apps/<app_name>/state/<action>', views.change_app_state, name='change_app_state'),
     path('apps/<app_name>/check_app_state/<task_id>', views.check_app_state, name='check_app_state'),
+    path('apps/<app_name>/configuration/buildpacks', views.application_buildpacks, name='application_buildpacks'),
 
     # END NEW VIEWS
 

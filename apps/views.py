@@ -248,7 +248,6 @@ def app_configuration(request, app_name):
     :param app_name: 
     :return: 
     """
-    original_buildpack_items = buildpack_list(app_name)
     original_postgres_items = postgres_list(app_name)
     original_mariadb_items = mariadb_list(app_name)
     list_postgres = []
@@ -268,7 +267,6 @@ def app_configuration(request, app_name):
         'postgres': list_postgres,
         'redis': redis_list(app_name),
         'mariadb': list_mariadb,
-        'buildpacks': original_buildpack_items,
     }
 
     return render(request, 'app_configuration.html', {
@@ -725,7 +723,7 @@ def remove_buildpack(request, app_name):
 
             return run_cmd_with_log(
                 app_name,
-                "Removing %s buildpack from %s" % (app_name, buildpack_url),
+                "Removing %s buildpack from %s" % (buildpack_url, app_name),
                 [
                     cmd
                 ],
@@ -1021,4 +1019,15 @@ def check_app_state(request, app_name, task_id):
     else:
         raise Exception(data)
 
+
+def application_buildpacks(request, app_name):
+    original_buildpack_items = buildpack_list(app_name)
+    return render(
+        request,
+        'app_buildpacks.html',
+        {
+            'app_name': app_name,
+            'buildpacks': original_buildpack_items,
+        }
+    )
 

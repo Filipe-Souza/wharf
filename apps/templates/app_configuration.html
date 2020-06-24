@@ -1,10 +1,5 @@
 {% extends "base.html" %}
 {% block body %}
-    <style>
-    .card .card-header-toolbar.card-header-tabs {
-        margin-bottom: 15px !important;
-    }
-    </style>
     <div class="wrapper ">
         {% include "components/sidebar/sidebar.html" %}
         <div class="main-panel">
@@ -36,12 +31,6 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link tech-icon" href="#redis" data-toggle="tab">
                                                         <span>Redis</span>
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link tech-icon" href="#buildpacks" data-toggle="tab">
-                                                        <span>Buildpacks</span>
                                                         <div class="ripple-container"></div>
                                                     </a>
                                                 </li>
@@ -250,64 +239,6 @@
                                                     {% else: %}
                                                         <tr>
                                                             <td colspan="6">No Redis linked applications</td>
-                                                        </tr>
-                                                    {% endif %}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="buildpacks">
-                                            <div class="card-header card-header-toolbar card-header-tabs card-header-info">
-                                                <div class="nav-tabs-navigation">
-                                                    <div class="nav-tabs-wrapper">
-                                                        <ul class="nav nav-tabs" data-tabs="tabs">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" rel="tooltip" title="Add a new Buildpack" href="{{ url('add_buildpack', app_name=app) }}">
-                                                                    <i class="material-icons">add_box</i> Add new
-                                                                    <div class="ripple-container"></div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead class="text-secondary">
-                                                    <tr>
-                                                        <th scope="col">Buildpack URL</th>
-                                                        <th scope="col" class="text-right">Actions</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% if app_links.buildpacks %}
-                                                        {% for item in app_links.buildpacks %}
-                                                            <tr>
-                                                                <td>
-                                                                    {% if "https" or "http" in item %}
-                                                                        <a href="{{ item }}" rel="nofollow noopener noreferrer" target="_blank">{{ item }}</a>
-                                                                    {% else %}
-                                                                        <span class="buildpack-name-item">{{ item }}</span>
-                                                                    {% endif %}
-                                                                </td>
-                                                                <td class="td-actions text-right">
-                                                                    <form class="d-inline" action="{{ url('remove_buildpack', app_name=app) }}" method="POST">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" value="{{ item }}" name="buildpack_url" />
-                                                                        <button type="button" rel="tooltip"
-                                                                            title="Remove this buildpack"
-                                                                            class="btn btn-danger btn-link btn-sm"
-                                                                            data-attribute="{{ item }}"
-                                                                            onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_buildpack', app_name=app) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
-                                                                            <i class="material-icons">delete</i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% else: %}
-                                                        <tr>
-                                                            <td colspan="2">No buildpacks in this app</td>
                                                         </tr>
                                                     {% endif %}
                                                     </tbody>
