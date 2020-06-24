@@ -54,15 +54,6 @@
                                                     <td>{{ app[3] }}</td>
                                                     <td class="td-actions text-right">
                                                         <a
-                                                            href="{{ url('app_configuration', app_name=app[0]) }}"
-                                                            type="button"
-                                                            rel="tooltip"
-                                                            title="Manage application dependencies"
-                                                            class="btn btn-link btn-sm"
-                                                            data-attribute="{{ app[0] }}">
-                                                            <i class="material-icons">settings</i>
-                                                        </a>
-                                                        <a
                                                             href="{{ url('change_app_state', app_name=app[0], action='stop') }}"
                                                             type="button"
                                                             rel="tooltip"
