@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 {% block body %}
+    <style>
+    .card .card-header-icon .card-icon i {
+        font-size: 36px;
+        line-height: 56px;
+        width: 56px;
+        height: 56px;
+        text-align: center;
+    }
+    .card .card-header-icon .card-icon {
+        border-radius: 3px;
+        background-color: unset !important;
+        padding: 15px;
+        margin-top: -20px;
+        margin-right: 15px;
+        float: left;
+        text-align: center;
+    }
+    </style>
     <div class="wrapper ">
         {% include "components/sidebar/sidebar.html" %}
         <div class="main-panel">
@@ -10,56 +28,36 @@
                 <div class="container-fluid">
                     <!-- Process information -->
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="card card-chart">
                                 <div class="card-header card-header-primary">
                                     <h4 class="card-title">Applications links</h4>
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title" style="text-align: center;">
-                                        <a class="btn btn-md btn-info"
-                                           href="{{ url('app_configuration', app_name=app) }}">Configure app links
-                                            <i class="material-icons">settings</i>
-                                        </a>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-chart">
-                                <div class="card-header card-header-primary">
-                                    <h4 class="card-title">Process info</h4>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Status</h5>
-                                    <ul>
-                                        {%  if proccess %}
-                                            {% for (k,v) in process.items() if k!= 'processes' %}
-                                                <li>{{ k }}: {{ v }}</li>
-                                            {% endfor %}
-                                        {% else %}
-                                            <li>No processes running</li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-chart">
-                                <div class="card-header card-header-primary">
-                                    <h4 class="card-title">Processes</h4>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Status</h5>
-                                    <ul>
-                                        {%  if proccess %}
-                                            {% for (k,v) in process['processes'].items() %}
-                                                <li>{{ k }}: {{ v }}</li>
-                                            {% endfor %}
-                                        {% else %}
-                                            <li>No processes running</li>
-                                        {% endif %}
-                                    </ul>
+                                <div class="card-body card-header-icon"><br>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-mysql"></i>
+                                        <p>Manage MySQL</p>
+                                    </a>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-mariadb"></i>
+                                        <p>Manage MariaDB</p>
+                                    </a>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-postgres"></i>
+                                        <p>Manage PostgreSQL</p>
+                                    </a>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-redis"></i>
+                                        <p>Manage Redis</p>
+                                    </a>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-mongodb"></i>
+                                        <p>Manage MongoDB</p>
+                                    </a>
+                                    <a class="card-icon" href="#">
+                                        <i class="icon-heroku"></i>
+                                        <p>Manage Buildpacks</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>

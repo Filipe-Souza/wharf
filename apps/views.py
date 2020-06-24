@@ -599,6 +599,7 @@ def remove_app_env_var(request, app_name):
 def app_info(request, app_name):
     app, _ = models.App.objects.get_or_create(name=app_name)
     config = app_config(app_name)
+    log_content = run_cmd("logs %s" % app_name)
     if "GITHUB_URL" in config:
         app.github_url = config["GITHUB_URL"]
         app.save()
@@ -621,14 +622,12 @@ def app_info(request, app_name):
 
     return render(request, 'app_info.html', {
         'letsencrypt': letsencrypt(app_name),
-        'process': process_info(app_name),
-        'logs': ansi_escape.sub("", run_cmd("logs %s --num 1000" % app_name)),
+        'logs': ansi_escape.sub("", log_content),
         'domains': domains_list(app_name),
         'domain_form': forms.CreateDomainForm(),
         'config_bulk_form': form,
         'app': app_name,
         'config': sorted(config.items()),
-        'task_logs': models.TaskLog.objects.filter(app=app).order_by('-when').all(),
     })
 
 
