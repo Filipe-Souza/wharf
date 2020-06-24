@@ -133,8 +133,8 @@ class MyClass(object):
 
 
 def apps_report():
-    data = run_cmd_with_cache("apps:report")
-    search = " app information"
+    data = run_cmd_with_cache("ps:report")
+    search = " ps information"
     lines = filter(None, data.split("=====> "))
     lines = list(map(lambda line: re.split("\n", str(line)), lines))
     for i in range(len(lines)):
@@ -982,7 +982,7 @@ def toggle_deploy_lock(request, app_name, action):
             commands = "apps:%s %s" % (action, app_name)
             return run_cmd_with_log(
                 app_name,
-                "Trying to lock app" if action is "lock" else "Trying to unlock app",
+                "Trying to %s app" % action,
                 [
                     commands,
                 ],

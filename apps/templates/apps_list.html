@@ -33,10 +33,11 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary">
-                                                <th>Name</th>
-                                                <th>Git SHA</th>
-                                                <th>Deploy lock status</th>
-                                                <th class="text-right">Actions</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Processes</th>
+                                                <th scope="col">Deployed</th>
+                                                <th scope="col">Running</th>
+                                                <th scope="col" class="text-right">Actions</th>
                                             </thead>
                                             <tbody>
                                              {% for app in apps %}
@@ -48,31 +49,10 @@
                                                             {{ app[0] }}
                                                         </a>
                                                     </td>
-                                                    {% if app[2] %}
-                                                        <td>{{ app[2] }}</td>
-                                                    {% else %}
-                                                        <td>-</td>
-                                                    {% endif %}
-                                                    <td>
-                                                        {% if app[4] == 'True' %}
-                                                            <a href="{{ url('app_toggle_lock', app_name=app[0], action='unlock') }}" type="button" rel="tooltip"
-                                                                title="Unlock this app and enable deploys"
-                                                                class="btn btn-danger btn-link btn-sm">
-                                                                <i class="material-icons">lock</i>
-                                                                Locked
-                                                            </a>
-                                                        {% elif app[4] == 'False' %}
-                                                            <a href="{{ url('app_toggle_lock', app_name=app[0], action='lock') }}" type="button" rel="tooltip"
-                                                                title="Lock this app and disable deploys"
-                                                                class="btn btn-primary btn-link btn-sm">
-                                                                <i class="material-icons">lock_open</i>
-                                                                Unlocked
-                                                            </a>
-                                                        {% else %}
-                                                            <a href="#" style="margin-left: 20px">-</a>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="td-actions text-right" style="width: fit-content;">
+                                                    <td>{{ app[1] }}</td>
+                                                    <td>{{ app[2] }}</td>
+                                                    <td>{{ app[3] }}</td>
+                                                    <td class="td-actions text-right">
                                                         <a
                                                             href="{{ url('app_configuration', app_name=app[0]) }}"
                                                             type="button"
@@ -106,6 +86,22 @@
                                                             class="btn btn-link btn-sm"
                                                             data-attribute="{{ app[0] }}">
                                                             <i class="material-icons">replay</i>
+                                                        </a>
+                                                        <a
+                                                            href="{{ url('app_toggle_lock', app_name=app[0], action='lock') }}"
+                                                            type="button"
+                                                            rel="tooltip"
+                                                            title="Lock app deploys"
+                                                            class="btn btn-link btn-sm">
+                                                            <i class="material-icons">lock</i>
+                                                        </a>
+                                                        <a
+                                                            href="{{ url('app_toggle_lock', app_name=app[0], action='unlock') }}"
+                                                            type="button"
+                                                            rel="tooltip"
+                                                            title="Unlock app deploys"
+                                                            class="btn btn-link btn-sm">
+                                                            <i class="material-icons">lock_open</i>
                                                         </a>
                                                     </td>
                                                 </tr>
