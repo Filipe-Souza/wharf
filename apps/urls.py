@@ -25,6 +25,9 @@ urlpatterns = [
     path('apps/<app_name>/state/<action>', views.change_app_state, name='change_app_state'),
     path('apps/<app_name>/check_app_state/<task_id>', views.check_app_state, name='check_app_state'),
     path('apps/<app_name>/configuration/buildpacks', views.application_buildpacks, name='application_buildpacks'),
+    path('apps/<app_name>/configuration/postgres', views.application_postgres, name='application_postgres'),
+    path('apps/<app_name>/configuration/mariadb', views.application_mariadb, name='application_mariadb'),
+    path('apps/<app_name>/configuration/redis', views.application_redis, name='application_redis'),
 
     # END NEW VIEWS
 

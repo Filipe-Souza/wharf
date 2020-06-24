@@ -1031,3 +1031,58 @@ def application_buildpacks(request, app_name):
         }
     )
 
+
+def application_postgres(request, app_name):
+
+    original_postgres_items = postgres_list(app_name)
+    list_postgres = []
+    if type(original_postgres_items) is dict:
+        list_postgres.append(postgres_list(app_name))
+    else:
+        list_postgres = original_postgres_items
+
+    return render(
+        request,
+        'app_links.html',
+        {
+            'name': 'PostgreSQL',
+            'type': 'postgres',
+            'app_name': app_name,
+            'database': list_postgres,
+        }
+    )
+
+
+def application_mariadb(request, app_name):
+    original_mariadb_items = mariadb_list(app_name)
+    list_mariadb = []
+    if type(original_mariadb_items) is dict:
+        list_mariadb.append(mariadb_list(app_name))
+    else:
+        list_mariadb = original_mariadb_items
+
+    return render(
+        request,
+        'app_links.html',
+        {
+            'name': 'MariaDB',
+            'type': 'mariadb',
+            'app_name': app_name,
+            'database': list_mariadb,
+        }
+    )
+
+
+def application_redis(request, app_name):
+    list_redis = redis_list(app_name)
+
+    return render(
+        request,
+        'app_links.html',
+        {
+            'name': 'Redis',
+            'type': 'redis',
+            'app_name': app_name,
+            'database': list_redis,
+        }
+    )

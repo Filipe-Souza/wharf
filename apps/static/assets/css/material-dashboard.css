@@ -19889,4 +19889,21 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.card .card-header-icon .card-icon i {
+    font-size: 36px;
+    line-height: 56px;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+}
+.card .card-header-icon .card-icon {
+    border-radius: 3px;
+    background-color: unset !important;
+    padding: 15px;
+    margin-top: -20px;
+    margin-right: 15px;
+    float: left;
+    text-align: center;
+}
+
 /*# sourceMappingURL=dashboard-free.css.map */

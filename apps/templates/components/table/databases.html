@@ -1,0 +1,55 @@
+<table class="table">
+    <thead class="text-secondary">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Version</th>
+            <th scope="col">Exposed ports</th>
+            <th scope="col">Links</th>
+            <th scope="col" class="text-right">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if database %}
+        {% for item in database %}
+            <tr>
+                <td>{{ item['NAME'] }}</td>
+                <td>{{ item['STATUS'] }}</td>
+                <td>{{ item['VERSION'] }}</td>
+                <td>{{ item['EXPOSED PORTS'] }}</td>
+                <td>{{ item['LINKS'] }}</td>
+                <td class="td-actions text-right">
+                    <button type="button" rel="tooltip"
+                            title="Allow external access to this link"
+                            class="btn btn-link btn-sm"
+                            data-attribute="{{ item['LINKS'] }}"
+                            data-target="#">
+                        <i class="material-icons">compare_arrows</i>
+                    </button>
+                    <form
+                        class="d-inline"
+                        action="{{ url('remove_'+type, app_name=app, link_name=item['LINKS']) }}"
+                        method="POST"
+                    >
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ item['LINKS'] }}" name="name"/>
+                        <button type="button" rel="tooltip"
+                                title="Remove this link"
+                                class="btn btn-danger btn-link btn-sm"
+                                disabled="disabled"
+                                data-attribute="{{ item['LINKS'] }}"
+                                data-target="{{ url('remove_'+type, app_name=app, link_name=item['LINKS']) }}"
+                                onclick="removeTarget(this.getAttribute('data-attribute'), '{{ url('remove_'+type, app_name=app, link_name=item['LINKS']) }}', document.getElementsByName('csrfmiddlewaretoken')[0].value);">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else: %}
+        <tr>
+            <td colspan="6">No linked databases found</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

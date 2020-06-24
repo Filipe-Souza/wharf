@@ -1,23 +1,5 @@
 {% extends "base.html" %}
 {% block body %}
-    <style>
-    .card .card-header-icon .card-icon i {
-        font-size: 36px;
-        line-height: 56px;
-        width: 56px;
-        height: 56px;
-        text-align: center;
-    }
-    .card .card-header-icon .card-icon {
-        border-radius: 3px;
-        background-color: unset !important;
-        padding: 15px;
-        margin-top: -20px;
-        margin-right: 15px;
-        float: left;
-        text-align: center;
-    }
-    </style>
     <div class="wrapper ">
         {% include "components/sidebar/sidebar.html" %}
         <div class="main-panel">
@@ -34,29 +16,29 @@
                                     <h4 class="card-title">Applications links</h4>
                                 </div>
                                 <div class="card-body card-header-icon"><br>
-                                    <a class="card-icon" href="#">
-                                        <i class="icon-mysql"></i>
-                                        <p>Manage MySQL</p>
-                                    </a>
-                                    <a class="card-icon" href="#">
+                                    <a class="card-icon" href="{{ url('application_mariadb', app_name=app) }}">
                                         <i class="icon-mariadb"></i>
                                         <p>Manage MariaDB</p>
                                     </a>
-                                    <a class="card-icon" href="#">
+                                    <a class="card-icon" href="{{ url('application_postgres', app_name=app) }}">
                                         <i class="icon-postgres"></i>
                                         <p>Manage PostgreSQL</p>
                                     </a>
-                                    <a class="card-icon" href="#">
+                                    <a class="card-icon" href="{{ url('application_redis', app_name=app) }}">
                                         <i class="icon-redis"></i>
                                         <p>Manage Redis</p>
-                                    </a>
-                                    <a class="card-icon" href="#">
-                                        <i class="icon-mongodb"></i>
-                                        <p>Manage MongoDB</p>
                                     </a>
                                     <a class="card-icon" href="{{ url('application_buildpacks', app_name=app) }}">
                                         <i class="icon-heroku"></i>
                                         <p>Manage Buildpacks</p>
+                                    </a>
+                                    <a class="card-icon" href="#" disabled="disabled">
+                                        <i class="icon-mysql"></i>
+                                        <p>Manage MySQL</p>
+                                    </a>
+                                    <a class="card-icon" href="#" disabled="disabled">
+                                        <i class="icon-mongodb"></i>
+                                        <p>Manage MongoDB</p>
                                     </a>
                                 </div>
                             </div>
