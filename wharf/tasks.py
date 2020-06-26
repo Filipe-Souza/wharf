@@ -1,6 +1,10 @@
+from django.shortcuts import redirect
+from django.urls import reverse
+
 from .celery import app
 from paramiko.client import SSHClient, AutoAddPolicy
 from paramiko import RSAKey
+from paramiko.ssh_exception import *
 from django.conf import settings
 import select
 import time
@@ -65,24 +69,29 @@ def run_ssh_command(self, command):
             pkey = RSAKey.from_private_key_file(keyfile)
         else:
             pkey = None
-        client.connect(settings.DOKKU_HOST, port=settings.DOKKU_SSH_PORT, username="dokku", pkey=pkey)
-        transport = client.get_transport()
-        channel = transport.open_session()
-        channel.exec_command(c)
-        while True:
-            anything = False
-            while channel.recv_ready():
-                data = channel.recv(1024)
-                handle_data(key, data)
-                anything = True
-            while channel.recv_stderr_ready():
-                data = channel.recv_stderr(1024)
-                handle_data(key, data)
-                anything = True
-            if not anything:
-                if channel.exit_status_ready():
-                    break
-                time.sleep(0.1)
+
+        try:
+            client.connect(settings.DOKKU_HOST, port=settings.DOKKU_SSH_PORT, username="dokku", pkey=pkey)
+            transport = client.get_transport()
+            channel = transport.open_session()
+            channel.exec_command(c)
+            while True:
+                anything = False
+                while channel.recv_ready():
+                    data = channel.recv(1024)
+                    handle_data(key, data)
+                    anything = True
+                while channel.recv_stderr_ready():
+                    data = channel.recv_stderr(1024)
+                    handle_data(key, data)
+                    anything = True
+                if not anything:
+                    if channel.exit_status_ready():
+                        break
+                    time.sleep(0.1)
+        except SSHException:
+            return redirect(reverse('index'))
+
     return redis.get(key).decode("utf-8")
 
 def set_nb(pipe):
