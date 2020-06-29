@@ -36,6 +36,7 @@ Also the tests for the original project are not approved, because of my lack of 
   * https://github.com/dokku/dokku-postgres
   * https://github.com/dokku/dokku-letsencrypt
   * https://github.com/dokku/dokku-mariadb
+  * https://github.com/dokku/dokku-mongo
   
 3. [A Google API & Services OAuth Credentials to login in.](https://console.developers.google.com/apis/credentials), with API Key and OAuth 2.0 Client IDs setup.
 
@@ -106,18 +107,24 @@ Setup a dokku machine with Vagrant and a Wharf development environment with Dock
 
 ## Screenshots
 
+### Initial setup
 ![](screenshots/ssh_key_setup.png)
 
+### Application list
 ![](screenshots/app_list.png)
 
+### Information navbar
 ![](screenshots/navbar.png)
 
 ![](screenshots/navbar_notification.png)
 
+### Global environment variables
 ![](screenshots/global_env_var_list.png)
 
-![](screenshots/app_links_proc_info_procs.png)
+### Generic task 
 
+
+### Application details
 ![](screenshots/app_log_output.png)
 
 ![](screenshots/app_log_output.png)
@@ -127,9 +134,3 @@ Setup a dokku machine with Vagrant and a Wharf development environment with Dock
 ![](screenshots/app_env_vars.png)
 
 ![](screenshots/app_env_vars_form.png)
-
-![](screenshots/app_postgres_link.png)
-
-![](screenshots/app_redis_link.png)
-
-![](screenshots/app_task_log.png)
